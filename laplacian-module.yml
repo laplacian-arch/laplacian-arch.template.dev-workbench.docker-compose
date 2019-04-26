@@ -1,0 +1,10 @@
+project:
+  group: laplacian-arch
+  type: template
+  name: dev-workbench
+  subname: docker-compose
+  version: "1.0.0"
+  description: |
+    A docker compose script which gives developers a complete local development environment
+    including a Web IDE and service runtimes consisting of a set of containers.
+

@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  ide:
+    build: "./image-context"
+    command:
+    - --allow-http
+    - --no-auth
+    ports:
+    - "8443:8443"
+    - "8080:8080"
+    - "3333:3333"
+    volumes:
+    - type: bind
+      source: ../../../
+      target: /home/developer/workspace/
+      consistency: delegated
+    networks:
+    - frontend
+    - backend
+
+  {{#each datasources as |datasource|}}
+  {{hyphen datasource.container_name}}:
+    image: "{{datasource.container_image}}"
+    environment:
+    - POSTGRES_USER={{datasource.user}}
+    - POSTGRES_PASSWORD={{datasource.password}}
+    networks:
+    - backend
+  {{/each}}
+
+networks:
+  frontend:
+  backend:
